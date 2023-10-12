@@ -20,13 +20,13 @@ public class NaiveReentrantLock {
 
     public boolean unlock() {
         Thread current = Thread.currentThread();
-        Integer value = mutex.get();
+        int value = mutex.get() - 1;
         if (owner == current) {
-            mutex.set(--value);
             if (value == 0) {
                 owner = null;
-                return true;
             }
+            mutex.set(value);
+            return value == 0;
         }
         return false;
     }

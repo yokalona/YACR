@@ -3,7 +3,7 @@ package com.github.yokalona;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 
-final class GuardedValue<T> {
+public final class GuardedValue<T> {
 
     private static final VarHandleHolder VAR_HANDLE_HOLDER = new VarHandleHolder();
 
