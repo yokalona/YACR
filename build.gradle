@@ -8,6 +8,7 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+
 sourceSets {
     main {
         java {
@@ -17,5 +18,5 @@ sourceSets {
 }
 
 dependencies {
-//    compile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
 }
