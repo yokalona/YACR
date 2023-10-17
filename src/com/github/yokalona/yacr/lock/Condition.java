@@ -12,4 +12,8 @@ public class Condition {
         mutex = true;
     }
 
+    public void repeat() {
+        mutex = false;
+    }
+
 }

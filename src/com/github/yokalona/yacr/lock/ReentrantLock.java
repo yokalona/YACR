@@ -4,11 +4,12 @@ import com.github.yokalona.yacr.annotations.ProbablySafe;
 import com.github.yokalona.yacr.reference.GuardedReference;
 
 @ProbablySafe
-public class ReentrantLock {
+public class ReentrantLock implements Lock {
 
     private Thread owner = null;
     private final GuardedReference<Integer> mutex = GuardedReference.guard(0);
 
+    @Override
     public boolean lock() {
         final Thread current = Thread.currentThread();
         Integer value = mutex.get();
@@ -22,6 +23,12 @@ public class ReentrantLock {
         return false;
     }
 
+    public AutoUnlockable doLock() {
+        while (!lock()) Thread.onSpinWait();
+        return this::unlock;
+    }
+
+    @Override
     public boolean unlock() {
         Thread current = Thread.currentThread();
         int value = mutex.get() - 1;
