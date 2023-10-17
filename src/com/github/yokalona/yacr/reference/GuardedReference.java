@@ -1,24 +1,27 @@
-package com.github.yokalona;
+package com.github.yokalona.yacr.reference;
+
+import com.github.yokalona.yacr.annotations.ProbablySafe;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 
-public final class GuardedValue<T> {
+@ProbablySafe
+public final class GuardedReference<T> implements Reference<T> {
 
     private static final VarHandleHolder VAR_HANDLE_HOLDER = new VarHandleHolder();
 
     private volatile T value;
 
-    private GuardedValue(T value) {
+    private GuardedReference(T value) {
         this.value = value;
     }
 
-    public static <T> GuardedValue<T> guard() {
-        return new GuardedValue<>(null);
+    public static <T> GuardedReference<T> guard() {
+        return new GuardedReference<>(null);
     }
 
-    public static <T> GuardedValue<T> guard(T value) {
-        return new GuardedValue<>(value);
+    public static <T> GuardedReference<T> guard(T value) {
+        return new GuardedReference<>(value);
     }
 
     public T get() {
@@ -39,7 +42,7 @@ public final class GuardedValue<T> {
 
         public VarHandleHolder() {
             try {
-                handle = MethodHandles.lookup().findVarHandle(GuardedValue.class, "value", Object.class);
+                handle = MethodHandles.lookup().findVarHandle(GuardedReference.class, "value", Object.class);
             } catch (ReflectiveOperationException e) {
                 throw new Error(e);
             }

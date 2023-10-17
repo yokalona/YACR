@@ -1,9 +1,13 @@
-package com.github.yokalona;
+package com.github.yokalona.yacr.lock;
 
-public class NaiveReentrantLock {
+import com.github.yokalona.yacr.annotations.ProbablySafe;
+import com.github.yokalona.yacr.reference.GuardedReference;
 
-    private final GuardedValue<Integer> mutex = GuardedValue.guard(0);
+@ProbablySafe
+public class ReentrantLock {
+
     private Thread owner = null;
+    private final GuardedReference<Integer> mutex = GuardedReference.guard(0);
 
     public boolean lock() {
         final Thread current = Thread.currentThread();
